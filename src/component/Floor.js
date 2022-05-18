@@ -8,6 +8,9 @@ import camera from '../image/icon/camera.png'
 import f1 from '../image/floormap/floor1.jpeg'
 import f2 from '../image/floormap/floor2.jpeg'
 import { Polyline } from 'react-leaflet';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 /* robinpowered */
 class Floor extends Component {
@@ -28,6 +31,7 @@ class Floor extends Component {
             currentZoomLevel: 0,
             bounds: iniBounds,
             targetFloor: 'delta_f1',
+            targetBuilding:'Building1',
             floors: {
                 delta_f1: {
                     name: 'F1',
@@ -96,7 +100,10 @@ lng:93.199
 
                        ] 
                 }
-            }
+            },
+            buildings: [
+                {label:'Building1',
+            label:'Building2' }],
         };
         
 
@@ -114,8 +121,8 @@ lng:93.199
         
 
         map.on('click', (e) => {
-            this.handleAddMarker(e, map);
-            //this.handleChangeFloor();
+            //this.handleAddMarker(e, map);
+            this.handleChangeFloor();
         });
 
         //  const w = 1280 * 2,
@@ -141,6 +148,10 @@ lng:93.199
 
     handleChangeFloor(e) {
         this.setState({ targetFloor: e.target.dataset.floor });
+    }
+
+    handleChangeBuilding(e){
+        this.setState({ targetFloor: e.target.dataset.Building });
     }
 
     handleAddMarker(e, map) {
@@ -218,10 +229,7 @@ lng:93.199
                         )}
 
 
-    
-    <Polyline positions={this.state.floors[this.state.targetFloor].polylines}>
-                
-
+                         <Polyline positions={this.state.floors[this.state.targetFloor].polylines}>  
                         </Polyline>
  
                         
@@ -232,10 +240,38 @@ lng:93.199
                     </ImageOverlay>
 
                     <Control position="topright">
-                        <div style={{ backgroundColor: 'black', padding: '5px', }}>
+                        <div style={{ backgroundColor: 'transparent', padding: '5px', }}>
                             <button onClick={this.handleChangeFloor.bind(this)} data-floor="delta_f1">F1</button>
                             <button onClick={this.handleChangeFloor.bind(this)} data-floor="delta_b1">F2</button>
                         </div>
+                       
+                    </Control>
+                    <Control position="topright">
+                        <div style={{ backgroundColor: 'transparent', padding: '5px', }}>
+                        <Autocomplete
+        id="building"
+        size="small"
+        options={this.state.countries}
+        getOptionLabel={(option) => option.label }
+        defaultValue={this.state.countries[0]}
+        renderInput={(params) => (
+          <TextField {...params} variant="standard" label="Size small" placeholder="Building" />
+        )}
+        onSelectCapture={this.handleChangeBuilding.bind()}
+      />
+      <Autocomplete
+        id="floor"
+        size="small"
+        options={this.state.countries}
+        getOptionLabel={(option) => option.label }
+        defaultValue={this.state.countries[0]}
+        renderInput={(params) => (
+          <TextField {...params} variant="standard" label="Size small" placeholder="Floor" />
+        )}
+        onSelectCapture={this.handleChangeFloor.bind()}
+      />
+                        </div>
+                       
                     </Control>
 
                 </Map>
