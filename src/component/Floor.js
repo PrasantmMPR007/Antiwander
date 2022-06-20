@@ -34,8 +34,21 @@ class Floor extends Component {
       currentZoomLevel: 0,
       bounds: iniBounds,
       targetFloor: "delta_b1",
+      selectedFloor :{
+        "CtrCode": 450,
+        "FloorNo": 0,
+        "FloorName": "G/F",
+        "Image": GF
+      },
       targetBuilding: "Building1",
-      selectedBuilding: {},
+      selectedBuilding: {
+        "Id": 3,
+        "CtrCode": 450,
+        "SortOrder": 450,
+        "HomeCenterAbbr": "LKSCA",
+        "HomeCenterName": "李嘉誠護理安老院",
+        "HomeCenterDescription": "李嘉誠護理安老院"
+      },
       myfloors: [
         { id: 1, buildingid: 1, floor: "delta_f1" },
         { id: 2, buildingid: 2, floor: "delta_b1" },
@@ -142,10 +155,208 @@ class Floor extends Component {
           ],
         },
       },
-      buildings: [
-        { id: 1, label: "Building1" },
-        { id: 2, label: "Building2" },
-      ],
+      floors:[
+          {
+            "CtrCode": 450,
+            "FloorNo": 0,
+            "FloorName": "G/F",
+            "Image": GF
+          },
+          {
+            "CtrCode": 450,
+            "FloorNo": 1,
+            "FloorName": "1/F",
+            "Image": f1
+          },
+          {
+            "CtrCode": 450,
+            "FloorNo": 2,
+            "FloorName": "2/F",
+            "Image": f2
+          },
+          {
+            "CtrCode": 450,
+            "FloorNo": 3,
+            "FloorName": "3/F",
+            "Image": f3
+          },
+          {
+            "CtrCode": 450,
+            "FloorNo": 4,
+            "FloorName": "4/F",
+            "Image": f4
+          }
+         ],
+
+      // buildings: [
+      //   { id: 1, label: "Building1" },
+      //   { id: 2, label: "Building2" },
+      // ],
+
+      buildings:[
+        {
+          "Id": 1,
+          "CtrCode": 20,
+          "SortOrder": 20,
+          "HomeCenterAbbr": "GSHE",
+          "HomeCenterName": "牧愛長者之家\t",
+          "HomeCenterDescription": "牧愛長者之家"
+        },
+        {
+          "Id": 2,
+          "CtrCode": 255,
+          "SortOrder": 255,
+          "HomeCenterAbbr": "HLCE",
+          "HomeCenterName": "恩慈長者之家",
+          "HomeCenterDescription": "恩慈長者之家"
+        },
+        {
+          "Id": 3,
+          "CtrCode": 450,
+          "SortOrder": 450,
+          "HomeCenterAbbr": "LKSCA",
+          "HomeCenterName": "李嘉誠護理安老院",
+          "HomeCenterDescription": "李嘉誠護理安老院"
+        },
+        {
+          "Id": 4,
+          "CtrCode": 600,
+          "SortOrder": 600,
+          "HomeCenterAbbr": "SPHE",
+          "HomeCenterName": "保羅長者之家",
+          "HomeCenterDescription": "保羅長者之家"
+        },
+        {
+          "Id": 5,
+          "CtrCode": 730,
+          "SortOrder": 730,
+          "HomeCenterAbbr": "CAC",
+          "HomeCenterName": "張國亮伉儷安老服務大樓",
+          "HomeCenterDescription": "香港聖公會張國亮伉儷安老服務大樓"
+        },
+        {
+          "Id": 6,
+          "CtrCode": 1250,
+          "SortOrder": 1250,
+          "HomeCenterAbbr": "WKRSACH",
+          "HomeCenterName": "湖景宿舍",
+          "HomeCenterDescription": "湖景宿舍"
+        },
+        {
+          "Id": 7,
+          "CtrCode": 1350,
+          "SortOrder": 1350,
+          "HomeCenterAbbr": "LWHE",
+          "HomeCenterName": "林護長者之家",
+          "HomeCenterDescription": "林護長者之家"
+        },
+        {
+          "Id": 8,
+          "CtrCode": 3630,
+          "SortOrder": 3630,
+          "HomeCenterAbbr": "TKOACC",
+          "HomeCenterName": "將軍澳安老服務大樓",
+          "HomeCenterDescription": "將軍澳安老服務大樓"
+        },
+        {
+          "Id": 9,
+          "CtrCode": 3700,
+          "SortOrder": 3700,
+          "HomeCenterAbbr": "NH",
+          "HomeCenterName": "護養院",
+          "HomeCenterDescription": "護養院"
+        },
+        {
+          "Id": 10,
+          "CtrCode": 3750,
+          "SortOrder": 3750,
+          "HomeCenterAbbr": "PGR",
+          "HomeCenterName": "康恩園",
+          "HomeCenterDescription": "康恩園"
+        }
+       ],
+
+       Polylines:[
+        {
+          "CtrCode": 450,
+          "LocationId": 50137,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 12:29:12",
+          "X": 1103,
+          "Y": 474,
+          "LocDesc": "四樓升降機",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        },
+        {
+          "CtrCode": 450,
+          "LocationId": 50123,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 12:29:30",
+          "X": 1027,
+          "Y": 475,
+          "LocDesc": "四樓門口",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        },
+        {
+          "CtrCode": 450,
+          "LocationId": 50136,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 12:33:45",
+          "X": 1103,
+          "Y": 474,
+          "LocDesc": "四樓升降機",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        },
+        {
+          "CtrCode": 450,
+          "LocationId": 50123,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 12:33:51",
+          "X": 1027,
+          "Y": 475,
+          "LocDesc": "四樓門口",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        },
+        {
+          "CtrCode": 450,
+          "LocationId": 50137,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 12:33:53",
+          "X": 1103,
+          "Y": 474,
+          "LocDesc": "四樓升降機",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        },
+        {
+          "CtrCode": 450,
+          "LocationId": 50124,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 12:33:56",
+          "X": 1027,
+          "Y": 475,
+          "LocDesc": "四樓門口",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        },
+        {
+          "CtrCode": 450,
+          "LocationId": 50107,
+          "ClientId": "RC-45-0300",
+          "StartTime": "4/1/2022 15:26:37",
+          "X": 553,
+          "Y": 455,
+          "LocDesc": "四樓B翼後樓梯",
+          "FloorNo": 4,
+          "FloorDesc": "4/F"
+        }
+       ]
+       
+
     };
   }
 
@@ -217,7 +428,7 @@ class Floor extends Component {
     if(value !==null && value !=='' && value !==undefined){
     this.setState({
       selectedBuilding: value,
-      myfloors:this.state.myfloors.filter(x=>x.buildingid===value.id)
+      myfloors:this.state.myfloors.filter(x=>x.CtrCode===value.CtrCode)
     });
   }
   };
@@ -228,13 +439,12 @@ class Floor extends Component {
     console.log(this.state.myfloors);
     value !=null?
     this.setState({
-        targetFloor: value.floor,
-      
-    }):"";
+        selectedFloor: value,  
+  }):"";
   };
 
   flooroptionlabel = (option) => {
-    return option.floor || "";
+    return option.FloorName || "";
   };
 
   getfloor=()=>{
@@ -253,7 +463,7 @@ class Floor extends Component {
     //   return option.inputValue;
     // }
     // Regular option
-    return option.label || ""; // option ? : "";
+    return option.HomeCenterDescription || ""; // option ? : "";
   };
 
   updateMarkerPosition(e) {
@@ -292,13 +502,13 @@ class Floor extends Component {
           crs={L.CRS.Simple}
           attributionControl={false}
         >
-          {(this.state.targetFloor !==null && this.state.targetFloor !=='' 
-          &&this.state.targetFloor !== undefined) ?
+          {(this.state.selectedFloor !==null && this.state.selectedFloor !=='' 
+          &&this.state.selectedFloor !== undefined) ?
                   <ImageOverlay
-            url={this.state.floors[this.state.targetFloor].image}
+            url={this.state.floors.find(x=>x.FloorNo == this.state.selectedFloor.FloorNo).Image }
             bounds={this.state.bounds}
           >
-            {this.state.floors[this.state.targetFloor].markers.map((m) => (
+            {/* {this.state.floors[this.state.targetFloor].markers.map((m) => (
               <Marker
                 key={m.id}
                 id={m.id}
@@ -314,10 +524,13 @@ class Floor extends Component {
                   </span>
                 </Popup>
               </Marker>
-            ))}
+            ))} */}
 
             <Polyline
-              positions={this.state.floors[this.state.targetFloor].polylines}
+              
+              positions={this.state.Polylines && this.state.Polylines.map((m) => (
+               {lat:m.X, lng: m.Y}
+              ))}
             ></Polyline>
           </ImageOverlay>: null
   }
@@ -350,11 +563,12 @@ class Floor extends Component {
                 label="Centre"
                 name="building"
                 id="building"
-                options={this.state.buildings}
+                options={this.state.buildings.filter(x=>x.CtrCode ==450)}
+                defaultValue={this.state.buildings.find(x=>x.CtrCode ==450)}
                 onChange={this.buildingonchange}
                 getOptionLabel={this.buildingoptionlabel}
                 getOptionSelected={(option, value) =>
-                  value.label === option.label
+                  value.HomeCenterDescription === option.HomeCenterDescription
                 }
                 fullWidth={true}
                 freesolo={true}
@@ -362,15 +576,14 @@ class Floor extends Component {
 
               <AutoComplete
                 value={this.state.selectedFloor}
-                
                 label="Floor"
                 name="Floor"
                 id="Floor"
-                options={this.state.myfloors}
+                options={this.state.floors}
                 onChange={this.flooronchange}
                 getOptionLabel={this.flooroptionlabel}
                 getOptionSelected={(option, value) =>
-                  value.floor === option.floor
+                  value.FloorName === option.FloorName
                 }
                 fullWidth={true}
                 freesolo={true}
@@ -378,11 +591,11 @@ class Floor extends Component {
             </div>
           </Control>
         </Map>
-        <ol>
+        {/* <ol>
           {this.state.floors[this.state.targetFloor].markers.map((m) => (
             <li key={m.id}>{`[${m.id}] (${m.lat},${m.lng})`}</li>
           ))}
-        </ol>
+        </ol> */}
       </div>
     );
   }

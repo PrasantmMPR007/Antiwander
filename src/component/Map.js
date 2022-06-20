@@ -259,17 +259,6 @@ const mapRef = useRef(null);
 const [zoom,setZoom]=useState({ currentZoomLevel: 1 });
 
 
-
-
-   const handleZoomLevelChange=(newZoomLevel)=> {
-        setZoom({ currentZoomLevel: newZoomLevel });
-      }
-    
-
-
-
-
-useEffect(() => {
     const map = mapRef.current.leafletElement;
     map.on("zoomend", () => {
         const updatedZoomLevel = map.getZoom();
@@ -293,6 +282,41 @@ useEffect(() => {
     map.fitBounds(lbounds);
   
     map.setMaxBounds(bounds);
+
+
+
+   const handleZoomLevelChange=(newZoomLevel)=> {
+        setZoom({ currentZoomLevel: newZoomLevel });
+      }
+    
+
+
+
+
+useEffect(() => {
+    // const map = mapRef.current.leafletElement;
+    // map.on("zoomend", () => {
+    //     const updatedZoomLevel = map.getZoom();
+    //     handleZoomLevelChange(updatedZoomLevel);
+    //   });
+  
+
+    // const w = 2000 * 2,
+    //   h = 1200 * 2;
+
+    // const southWest = map.unproject([0, h], map.getMaxZoom() - 1);
+    // const northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
+
+    // const lbounds = new L.LatLngBounds(southWest, northEast);
+    // setBounds(lbounds);
+    // // const image = L.imageOverlay(
+    // //   Floor,
+    // //   lbounds
+    // // ).addTo(map);
+
+    // map.fitBounds(lbounds);
+  
+    // map.setMaxBounds(bounds);
   }, []);
  
 
@@ -334,7 +358,7 @@ const customPin =()=> L.divIcon({
         url={Floor}
         bounds={bounds}
       >
-        {markers.map((m) => (
+        {/* {markers.map((m) => (
          <Marker
                 key={m.id}
                 id={m.id}
@@ -355,7 +379,7 @@ const customPin =()=> L.divIcon({
                   </span>
                 </Popup>
               </Marker>
-              ))}
+              ))} */}
         </ImageOverlay>
 
       </Map>
