@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { Map, ImageOverlay, Marker, Popup } from "react-leaflet";
+import { CRS } from "leaflet";
 import Control from "react-leaflet-control";
 import camera from "../image/icon/camera.png";
 import f1 from "../image/floormap/F1.jpeg";
@@ -9,383 +10,360 @@ import f2 from "../image/floormap/F2.jpeg";
 import f3 from "../image/floormap/F3.jpeg";
 import f4 from "../image/floormap/F4.jpeg";
 import GF from "../image/floormap/GF.jpeg";
-
-//centre 
-const centers=()=>{
-  [
-    {
-      "Id": 1,
-      "CtrCode": 20,
-      "SortOrder": 20,
-      "HomeCenterAbbr": "GSHE",
-      "HomeCenterName": "牧愛長者之家\t",
-      "HomeCenterDescription": "牧愛長者之家"
-    },
-    {
-      "Id": 2,
-      "CtrCode": 255,
-      "SortOrder": 255,
-      "HomeCenterAbbr": "HLCE",
-      "HomeCenterName": "恩慈長者之家",
-      "HomeCenterDescription": "恩慈長者之家"
-    },
-    {
-      "Id": 3,
-      "CtrCode": 450,
-      "SortOrder": 450,
-      "HomeCenterAbbr": "LKSCA",
-      "HomeCenterName": "李嘉誠護理安老院",
-      "HomeCenterDescription": "李嘉誠護理安老院"
-    },
-    {
-      "Id": 4,
-      "CtrCode": 600,
-      "SortOrder": 600,
-      "HomeCenterAbbr": "SPHE",
-      "HomeCenterName": "保羅長者之家",
-      "HomeCenterDescription": "保羅長者之家"
-    },
-    {
-      "Id": 5,
-      "CtrCode": 730,
-      "SortOrder": 730,
-      "HomeCenterAbbr": "CAC",
-      "HomeCenterName": "張國亮伉儷安老服務大樓",
-      "HomeCenterDescription": "香港聖公會張國亮伉儷安老服務大樓"
-    },
-    {
-      "Id": 6,
-      "CtrCode": 1250,
-      "SortOrder": 1250,
-      "HomeCenterAbbr": "WKRSACH",
-      "HomeCenterName": "湖景宿舍",
-      "HomeCenterDescription": "湖景宿舍"
-    },
-    {
-      "Id": 7,
-      "CtrCode": 1350,
-      "SortOrder": 1350,
-      "HomeCenterAbbr": "LWHE",
-      "HomeCenterName": "林護長者之家",
-      "HomeCenterDescription": "林護長者之家"
-    },
-    {
-      "Id": 8,
-      "CtrCode": 3630,
-      "SortOrder": 3630,
-      "HomeCenterAbbr": "TKOACC",
-      "HomeCenterName": "將軍澳安老服務大樓",
-      "HomeCenterDescription": "將軍澳安老服務大樓"
-    },
-    {
-      "Id": 9,
-      "CtrCode": 3700,
-      "SortOrder": 3700,
-      "HomeCenterAbbr": "NH",
-      "HomeCenterName": "護養院",
-      "HomeCenterDescription": "護養院"
-    },
-    {
-      "Id": 10,
-      "CtrCode": 3750,
-      "SortOrder": 3750,
-      "HomeCenterAbbr": "PGR",
-      "HomeCenterName": "康恩園",
-      "HomeCenterDescription": "康恩園"
-    }
-   ]
-}
-
-//Floor by centercode
-const Floor=()=>{
-  [
-    {
-      "CtrCode": 450,
-      "FloorNo": 0,
-      "FloorName": "G/F"
-    },
-    {
-      "CtrCode": 450,
-      "FloorNo": 1,
-      "FloorName": "1/F"
-    },
-    {
-      "CtrCode": 450,
-      "FloorNo": 2,
-      "FloorName": "2/F"
-    },
-    {
-      "CtrCode": 450,
-      "FloorNo": 3,
-      "FloorName": "3/F"
-    },
-    {
-      "CtrCode": 450,
-      "FloorNo": 4,
-      "FloorName": "4/F"
-    }
-   ]
-}
-
-
-
+import AutoComplete from "../controls/AutoComplete.js";
+import TimePicker from "../controls/TimePicker";
 
 function MyMap() {
-const [Floor, setFloor]=useState(GF);
-const [centre,setCentre]=useState([
-  {
-    CtrCode: 450,
-    LocationId: 50137,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 12:29:12",
-    X: 1103,
-    Y: 474,
-    LocDesc: "四樓升降機",
-    FloorNo: "4",
-    FloorDesc: "4/F",
-    FIELD10: ""
-  },
-  {
-    CtrCode: 450,
-    LocationId: 50123,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 12:29:30",
-    X: 1027,
-    Y: 475,
-    LocDesc: "四樓門口4",
-    FloorNo: "4/F",
-    FloorDesc: "",
-    FIELD10: ""
-  },
-  {
-    CtrCode: 450,
-    LocationId: 50136,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 12:33:45",
-    X: 1103,
-    Y: 474,
-    LocDesc: "四樓升降機",
-    FloorNo: "4",
-    FloorDesc: "4/F",
-    FIELD10: ""
-  },
-  {
-    CtrCode: 450,
-    LocationId: 50123,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 12:33:51",
-    X: 1027,
-    Y: 475,
-    LocDesc: "四樓門口4",
-    FloorNo: "4/F",
-    FloorDesc: "",
-    FIELD10: ""
-  },
-  {
-    CtrCode: 450,
-    LocationId: 50137,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 12:33:53",
-    X: 1103,
-    Y: 474,
-    LocDesc: "四樓升降機",
-    FloorNo: "4",
-    FloorDesc: "4/F",
-    FIELD10: ""
-  },
-  {
-    CtrCode: 450,
-    LocationId: 50124,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 12:33:56",
-    X: 1027,
-    Y: 475,
-    LocDesc: "四樓門口4",
-    FloorNo: "4/F",
-    FloorDesc: "",
-    FIELD10: ""
-  },
-  {
-    CtrCode: 450,
-    LocationId: 50107,
-    ClientId: "RC-45-0300",
-    StartTime: "4/1/2022 15:26:37",
-    X: 553,
-    Y: 455,
-    LocDesc: "四樓B翼後樓梯",
-    FloorNo: "4",
-    FloorDesc: "4/F",
-    FIELD10: ""
-  }
- ]);
-const [bounds,setBounds]=useState(L.latLngBounds(null, null));
-const [markers, setMarkers] = useState([{
-    id: 1,
-    lat: -385,
-    lng: 204,
-  },
-  {
-    id: 2,
-    lat: -316,
-    lng: 719,
-  },
-  {
-    id: 3,
-    lat: 241,
-    lng: 592,
-  },
-  {
-    id: 4,
-    lat: -522,
-    lng: 302,
-  },
-  {
-    id: 5,
-    lat: -848,
-    lng: 736,
-  },
-  {
-    id: 6,
-    lat: -875,
-    lng: 1244,
-  },
-  {
-    id: 7,
-    lat: -596,
-    lng: 1252,
-  },
-]);
-const mapRef = useRef(null);
-const [zoom,setZoom]=useState({ currentZoomLevel: 1 });
+  const [Floor, setFloor] = useState(null);
+  const [Floorlist, setFloorlist] = useState(null);
+  const [center, setCenter] = useState({});
+  const [Centerlist, setCenterlist] = useState(null);
+  const [WanderingPath, setWanderingPath] = useState(null);
+  const [markers, setMarkers] = useState(null);
+  const [sttime, setSttime] = useState(new Date());
+  const [endtime, setEndtime] = useState(new Date());
+  const mapRef = useRef(null);
+  const [zoom, setZoom] = useState(1);
+  const [client, SetClient] = useState(null);
+  const [clientlist, SetClientlist] = useState(null);
 
-
+  useEffect(() => {
     const map = mapRef.current.leafletElement;
-    map.on("zoomend", () => {
-        const updatedZoomLevel = map.getZoom();
-        handleZoomLevelChange(updatedZoomLevel);
-      });
-  
+    const mybounds = [
+      [-5, -10],
+      [780, 900],
+    ];
+    const image = L.imageOverlay(GF, mybounds).addTo(map);
+    map.fitBounds(image.getBounds());
 
-    const w = 2000 * 2,
-      h = 1200 * 2;
-
-    const southWest = map.unproject([0, h], map.getMaxZoom() - 1);
-    const northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
-
-    const lbounds = new L.LatLngBounds(southWest, northEast);
-    setBounds(lbounds);
-    // const image = L.imageOverlay(
-    //   Floor,
-    //   lbounds
-    // ).addTo(map);
-
-    map.fitBounds(lbounds);
-  
-    map.setMaxBounds(bounds);
-
-
-
-   const handleZoomLevelChange=(newZoomLevel)=> {
-        setZoom({ currentZoomLevel: newZoomLevel });
-      }
-    
-
-
-
-
-useEffect(() => {
-    // const map = mapRef.current.leafletElement;
-    // map.on("zoomend", () => {
-    //     const updatedZoomLevel = map.getZoom();
-    //     handleZoomLevelChange(updatedZoomLevel);
-    //   });
-  
-
-    // const w = 2000 * 2,
-    //   h = 1200 * 2;
-
-    // const southWest = map.unproject([0, h], map.getMaxZoom() - 1);
-    // const northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
-
-    // const lbounds = new L.LatLngBounds(southWest, northEast);
-    // setBounds(lbounds);
-    // // const image = L.imageOverlay(
-    // //   Floor,
-    // //   lbounds
-    // // ).addTo(map);
-
-    // map.fitBounds(lbounds);
-  
-    // map.setMaxBounds(bounds);
+    SetClientlist([
+      "MC1002-16",
+      "MC1005-16",
+      "MC1013-17",
+      "MC1036-17",
+      "MC1073-18",
+      "MC1079-18",
+      "MC1084-18",
+      "MC1101-19",
+      "MC1110-19",
+      "MC1120-19",
+      "MC1123-19",
+      "MC1126-19",
+      "MC1131-19",
+      "MC1133-19",
+      "MC1156-20",
+      "MC1162-20",
+      "MC1163-20",
+      "MC1167-20",
+      "MC1177-21",
+      "MC1188-21",
+      "MC1189-21",
+      "MC1190-21",
+      "MC1196-21",
+      "MC1202-21",
+      "MC812-11",
+      "MC974-16",
+      "MC991-16",
+      "MC992-16",
+      "MC997-16",
+    ]);
   }, []);
- 
 
-const customPin =()=> L.divIcon({
-    className: "location-pin",
-    html: `<img src=${camera}><div class="pin"></div><div class="pulse"></div>`,
-    iconSize: [40, 40],
-    iconAnchor: [24, 40],
-  });
+  useEffect(() => {
+    const myhomecenter = async () => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      };
+      const response = await fetch(
+        "http://www.klconnectit.com/sms/api/system/HomeCenterList",
+        requestOptions
+      );
+      const data = await response.json();
+      let lks = data.data.find((x) => x.ctrCode === "0450");
+      setCenterlist(data.data);
+      setCenter(lks);
+    };
 
+    myhomecenter();
+  }, []);
+
+  useEffect(() => {
+    const myFloors = async () => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ctr: center && center.ctrCode }),
+      };
+      const response = await fetch(
+        "http://www.klconnectit.com/sms/api/system/HomeCenterFloorList?ctr=" +
+          center.ctrCode,
+        requestOptions
+      );
+      const data = await response.json();
+      console.log(data.data);
+      setFloorlist(data.data);
+    };
+    myFloors();
+  }, [center]);
+
+  useEffect(() => {
+    const map = mapRef.current.leafletElement;
+    const mybounds = [
+      [-5, -10],
+      [780, 900],
+    ];
+    console.log(Floor);
+    const GetFloorImage = () => {
+      return Floor !== null
+        ? Floor.floorNo === 0
+          ? GF
+          : Floor.floorNo === 1
+          ? f1
+          : Floor.floorNo === 2
+          ? f2
+          : Floor.floorNo === 3
+          ? f3
+          : Floor.floorNo === 4
+          ? f4
+          : ""
+        : "";
+    };
+    console.log(GetFloorImage());
+    const image = L.imageOverlay(GetFloorImage(), mybounds).addTo(map);
+    map.fitBounds(image.getBounds());
+  }, [Floor && Floor]);
+
+  useEffect(() => {
+    const map = mapRef.current.leafletElement;
+    const mybounds = [
+      [-5, -10],
+      [780, 900],
+    ];
+    console.log(Floor);
+    const GetFloorImage = () => {
+      return Floor !== null
+        ? Floor.floorNo === 0
+          ? GF
+          : Floor.floorNo === 1
+          ? f1
+          : Floor.floorNo === 2
+          ? f2
+          : Floor.floorNo === 3
+          ? f3
+          : Floor.floorNo === 4
+          ? f4
+          : ""
+        : "";
+    };
+    console.log(GetFloorImage());
+    const image = L.imageOverlay(GetFloorImage(), mybounds).addTo(map);
+    map.fitBounds(image.getBounds());
+  }, [Floor && Floor]);
+
+  useEffect(() => {
+    const GetWanderingPath = async () => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      };
+      if (
+        center != null &&
+        Floor != null &&
+        sttime != null &&
+        endtime != null
+      ) {
+        const response = await fetch(
+          "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
+            center.ctrCode +
+            "&flr=" +
+            Floor.floorNo +
+            "&cln=" +
+            "MC1133-19" +
+            "&st=2021-12-24 08:00:00.000&et=2021-12-24 23:00:00.000",
+          requestOptions
+        );
+        const data = await response.json();
+        setWanderingPath(data.data);
+      }
+    };
+    GetWanderingPath();
+  }, [center, Floor && Floor]);
+
+
+  const searchclicked =()=>{
+    const GetWanderingPath = async () => {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      };
+      if (
+        center != null &&
+        Floor != null &&
+        client != null&&
+        sttime != null &&
+        endtime != null
+      ) {
+        const response = await fetch(
+          "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
+            center.ctrCode +
+            "&flr=" +
+            Floor.floorNo +
+            "&cln=" +
+            client +
+            "&st="+sttime+
+            "&et="+endtime,
+          requestOptions
+        );
+        const data = await response.json();
+        console.log(data);
+        setWanderingPath(data.data);
+      }
+    };
+  }
+
+
+
+  const Centeronchange = (event) => {
+    const { name, value } = event.target;
+    if (value !== null && value !== "" && value !== undefined) {
+      setCenter(value);
+      setFloor(null);
+    }
+  };
+
+  const Centeroptionlabel = (option) => {
+    return option.homeCenterDescription || "";
+  };
+
+  const Flooronchange = (event) => {
+    const { name, value } = event.target;
+    if (value !== null && value !== "" && value !== undefined) {
+      setFloor(value);
+      console.log(value);
+    }
+  };
+
+  const clientoptionlabel = (option) => {
+    return option || "";
+  };
+
+  const clientonchange = (event) => {
+    const { name, value } = event.target;
+    if (value !== null && value !== "" && value !== undefined) {
+      SetClient(value);
+      console.log(value);
+    }
+  };
+
+  const Flooroptionlabel = (option) => {
+    return option.floorName || "";
+  };
+
+  const sttimeonchange = (event) => {
+    const { name, value } = event.target;
+    if (value !== null && value !== "" && value !== undefined) {
+      setSttime(value);
+      console.log(value);
+    }
+  };
+
+  const endtimeonchange = (event) => {
+    const { name, value } = event.target;
+    if (value !== null && value !== "" && value !== undefined) {
+      setEndtime(value);
+      console.log(value);
+    }
+  };
 
   return (
     <div>
-        {/* <Map
-          center={[0, 0]}
-          zoom={1}
-          minZoom={1}
-          maxZoom={4}
-          crs={L.CRS.Simple}
-          attributionControl={false}
-          bo
-        > <ImageOverlay
-        url={Floor}
-        bounds={bounds}
-      >
-        </ImageOverlay>
-
-        </Map> */}
-        <Map
+      <Map
         ref={mapRef}
-        minZoom={1}
-        maxZoom={4}
-        crs={L.CRS.Simple}
-        maxBoundsViscosity={1.0}
-        boundsOptions={{ padding: [50, 50] }}
-        style={{ height: "96vh",width:"96vw" }}
+        crs={CRS.Simple}
+        boundsOptions={{ padding: [20, 20] }}
+        style={{ height: "97vh" }}
+        Zoom={zoom}
+        minZoom={0}
+        maxZoom={3}
+        center={[0, 0]}
       >
-        <ImageOverlay
-        url={Floor}
-        bounds={bounds}
-      >
-        {/* {markers.map((m) => (
-         <Marker
-                key={m.id}
-                id={m.id}
-                draggable={true}
-                
-                position={[m.lat, m.lng]}
-                icon={L.divIcon({
-                    className: "location-pin",
-                    html: `<img src=${camera}><div class="pin"></div><div class="pulse"></div>`,
-                    iconSize: [40, 40],
-                    iconAnchor: [24, 40],
-                  })}
-              >
-                <Popup minWidth={90}>
-                  <span>
-                    {" "}
-                    Lat:{m.lat}, Lng:{m.lng}{" "}
-                  </span>
-                </Popup>
-              </Marker>
-              ))} */}
-        </ImageOverlay>
+        <Control position="topright">
+          <div
+            style={{
+              backgroundColor: "transparent",
+              padding: "5px",
+              maxWidth: "220px",
+            }}
+          >
+            <AutoComplete
+              value={center}
+              label="Center"
+              name="Center"
+              id="Center"
+              options={Centerlist && Centerlist}
+              onChange={Centeronchange}
+              getOptionLabel={Centeroptionlabel}
+              getOptionSelected={(option, value) =>
+                value.homeCenterDescription === option.homeCenterDescription
+              }
+              fullWidth={true}
+              freesolo={true}
+            />
 
+            <AutoComplete
+              value={Floor}
+              label="Floor"
+              name="Floor"
+              id="Floor"
+              options={Floorlist && Floorlist}
+              onChange={Flooronchange}
+              getOptionLabel={Flooroptionlabel}
+              getOptionSelected={(option, value) =>
+                value.floorName === option.floorName
+              }
+              fullWidth={true}
+              freesolo={true}
+            />
+
+            <AutoComplete
+              value={client}
+              label="Client"
+              name="CLient"
+              id="Client"
+              options={clientlist && clientlist}
+              onChange={clientonchange}
+              getOptionLabel={clientoptionlabel}
+              getOptionSelected={(option, value) => value === option}
+              fullWidth={true}
+              freesolo={true}
+            />
+
+            <TimePicker
+              value={sttime}
+              lable="Start Time"
+              name="starttime"
+              id="starttime"
+              onChange={sttimeonchange}
+            />
+
+            <TimePicker
+              value={endtime}
+              lable="End Time"
+              name="endtime"
+              id="endtime"
+              onChange={endtimeonchange}
+            />
+
+            <button onClick={searchclicked}>search</button>
+          </div>
+        </Control>
       </Map>
-
     </div>
-  )
+  );
 }
 
-export default MyMap
+export default MyMap;

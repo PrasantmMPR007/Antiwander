@@ -39,6 +39,7 @@ export default function AutoComplete(props) {
     freesolo,
     disabled,
     onmyTextChange,
+    defaultValue
   } = props;
 
   return (
@@ -60,6 +61,7 @@ export default function AutoComplete(props) {
         options={options}
         getOptionLabel={getOptionLabel}
         freeSolo={freesolo}
+        defaultValue={defaultValue}
         renderInput={(params) => (
           <TextField
             {...params}
