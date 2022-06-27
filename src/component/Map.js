@@ -12,6 +12,7 @@ import f4 from "../image/floormap/F4.jpeg";
 import GF from "../image/floormap/GF.jpeg";
 import AutoComplete from "../controls/AutoComplete.js";
 import TimePicker from "../controls/TimePicker";
+import Button from '@material-ui/core/Button';
 
 function MyMap() {
   const [Floor, setFloor] = useState(null);
@@ -193,36 +194,41 @@ function MyMap() {
   }, [center, Floor && Floor]);
 
 
-  const searchclicked =()=>{
-    const GetWanderingPath = async () => {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
-      };
-      if (
-        center != null &&
-        Floor != null &&
-        client != null&&
-        sttime != null &&
-        endtime != null
-      ) {
-        const response = await fetch(
-          "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
-            center.ctrCode +
-            "&flr=" +
-            Floor.floorNo +
-            "&cln=" +
-            client +
-            "&st="+sttime+
-            "&et="+endtime,
-          requestOptions
-        );
-        const data = await response.json();
-        console.log(data);
-        setWanderingPath(data.data);
-      }
+
+
+  const GetWanderingPath = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
     };
+    if (
+      center != null &&
+      Floor != null &&
+      client != null&&
+      sttime != null &&
+      endtime != null
+    ) {
+      const response = await fetch(
+        "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
+          center.ctrCode.toString() +
+          "&flr=" +
+          Floor.floorNo.toString() +
+          "&cln=" +
+          client.toString() +
+          "&st="+sttime.toString()+
+          "&et="+endtime.toString(),
+        requestOptions
+      );
+      const data = await response.json();
+      console.log(data);
+      setWanderingPath(data.data);
+    }
+  };
+
+
+  const searchclicked =(event)=>{
+    GetWanderingPath();
   }
 
 
@@ -357,8 +363,8 @@ function MyMap() {
               id="endtime"
               onChange={endtimeonchange}
             />
-
-            <button onClick={searchclicked}>search</button>
+            
+            <Button variant="contained" color="primary" onClick={searchclicked}>Search</Button>
           </div>
         </Control>
       </Map>
