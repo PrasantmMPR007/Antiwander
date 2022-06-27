@@ -41,14 +41,15 @@ class Floor extends Component {
         "Image": GF
       },
       targetBuilding: "Building1",
-      selectedBuilding: {
-        "Id": 3,
-        "CtrCode": 450,
-        "SortOrder": 450,
-        "HomeCenterAbbr": "LKSCA",
-        "HomeCenterName": "李嘉誠護理安老院",
-        "HomeCenterDescription": "李嘉誠護理安老院"
-      },
+      selectedBuilding: null,
+      // {
+      //   "Id": 3,
+      //   "CtrCode": 450,
+      //   "SortOrder": 450,
+      //   "HomeCenterAbbr": "LKSCA",
+      //   "HomeCenterName": "李嘉誠護理安老院",
+      //   "HomeCenterDescription": "李嘉誠護理安老院"
+      // },
       myfloors: [
         { id: 1, buildingid: 1, floor: "delta_f1" },
         { id: 2, buildingid: 2, floor: "delta_b1" },
@@ -193,88 +194,89 @@ class Floor extends Component {
       //   { id: 2, label: "Building2" },
       // ],
 
-      buildings:[
-        {
-          "Id": 1,
-          "CtrCode": 20,
-          "SortOrder": 20,
-          "HomeCenterAbbr": "GSHE",
-          "HomeCenterName": "牧愛長者之家\t",
-          "HomeCenterDescription": "牧愛長者之家"
-        },
-        {
-          "Id": 2,
-          "CtrCode": 255,
-          "SortOrder": 255,
-          "HomeCenterAbbr": "HLCE",
-          "HomeCenterName": "恩慈長者之家",
-          "HomeCenterDescription": "恩慈長者之家"
-        },
-        {
-          "Id": 3,
-          "CtrCode": 450,
-          "SortOrder": 450,
-          "HomeCenterAbbr": "LKSCA",
-          "HomeCenterName": "李嘉誠護理安老院",
-          "HomeCenterDescription": "李嘉誠護理安老院"
-        },
-        {
-          "Id": 4,
-          "CtrCode": 600,
-          "SortOrder": 600,
-          "HomeCenterAbbr": "SPHE",
-          "HomeCenterName": "保羅長者之家",
-          "HomeCenterDescription": "保羅長者之家"
-        },
-        {
-          "Id": 5,
-          "CtrCode": 730,
-          "SortOrder": 730,
-          "HomeCenterAbbr": "CAC",
-          "HomeCenterName": "張國亮伉儷安老服務大樓",
-          "HomeCenterDescription": "香港聖公會張國亮伉儷安老服務大樓"
-        },
-        {
-          "Id": 6,
-          "CtrCode": 1250,
-          "SortOrder": 1250,
-          "HomeCenterAbbr": "WKRSACH",
-          "HomeCenterName": "湖景宿舍",
-          "HomeCenterDescription": "湖景宿舍"
-        },
-        {
-          "Id": 7,
-          "CtrCode": 1350,
-          "SortOrder": 1350,
-          "HomeCenterAbbr": "LWHE",
-          "HomeCenterName": "林護長者之家",
-          "HomeCenterDescription": "林護長者之家"
-        },
-        {
-          "Id": 8,
-          "CtrCode": 3630,
-          "SortOrder": 3630,
-          "HomeCenterAbbr": "TKOACC",
-          "HomeCenterName": "將軍澳安老服務大樓",
-          "HomeCenterDescription": "將軍澳安老服務大樓"
-        },
-        {
-          "Id": 9,
-          "CtrCode": 3700,
-          "SortOrder": 3700,
-          "HomeCenterAbbr": "NH",
-          "HomeCenterName": "護養院",
-          "HomeCenterDescription": "護養院"
-        },
-        {
-          "Id": 10,
-          "CtrCode": 3750,
-          "SortOrder": 3750,
-          "HomeCenterAbbr": "PGR",
-          "HomeCenterName": "康恩園",
-          "HomeCenterDescription": "康恩園"
-        }
-       ],
+      buildings:null,
+      //[
+      //   {
+      //     "Id": 1,
+      //     "CtrCode": 20,
+      //     "SortOrder": 20,
+      //     "HomeCenterAbbr": "GSHE",
+      //     "HomeCenterName": "牧愛長者之家\t",
+      //     "HomeCenterDescription": "牧愛長者之家"
+      //   },
+      //   {
+      //     "Id": 2,
+      //     "CtrCode": 255,
+      //     "SortOrder": 255,
+      //     "HomeCenterAbbr": "HLCE",
+      //     "HomeCenterName": "恩慈長者之家",
+      //     "HomeCenterDescription": "恩慈長者之家"
+      //   },
+      //   {
+      //     "Id": 3,
+      //     "CtrCode": 450,
+      //     "SortOrder": 450,
+      //     "HomeCenterAbbr": "LKSCA",
+      //     "HomeCenterName": "李嘉誠護理安老院",
+      //     "HomeCenterDescription": "李嘉誠護理安老院"
+      //   },
+      //   {
+      //     "Id": 4,
+      //     "CtrCode": 600,
+      //     "SortOrder": 600,
+      //     "HomeCenterAbbr": "SPHE",
+      //     "HomeCenterName": "保羅長者之家",
+      //     "HomeCenterDescription": "保羅長者之家"
+      //   },
+      //   {
+      //     "Id": 5,
+      //     "CtrCode": 730,
+      //     "SortOrder": 730,
+      //     "HomeCenterAbbr": "CAC",
+      //     "HomeCenterName": "張國亮伉儷安老服務大樓",
+      //     "HomeCenterDescription": "香港聖公會張國亮伉儷安老服務大樓"
+      //   },
+      //   {
+      //     "Id": 6,
+      //     "CtrCode": 1250,
+      //     "SortOrder": 1250,
+      //     "HomeCenterAbbr": "WKRSACH",
+      //     "HomeCenterName": "湖景宿舍",
+      //     "HomeCenterDescription": "湖景宿舍"
+      //   },
+      //   {
+      //     "Id": 7,
+      //     "CtrCode": 1350,
+      //     "SortOrder": 1350,
+      //     "HomeCenterAbbr": "LWHE",
+      //     "HomeCenterName": "林護長者之家",
+      //     "HomeCenterDescription": "林護長者之家"
+      //   },
+      //   {
+      //     "Id": 8,
+      //     "CtrCode": 3630,
+      //     "SortOrder": 3630,
+      //     "HomeCenterAbbr": "TKOACC",
+      //     "HomeCenterName": "將軍澳安老服務大樓",
+      //     "HomeCenterDescription": "將軍澳安老服務大樓"
+      //   },
+      //   {
+      //     "Id": 9,
+      //     "CtrCode": 3700,
+      //     "SortOrder": 3700,
+      //     "HomeCenterAbbr": "NH",
+      //     "HomeCenterName": "護養院",
+      //     "HomeCenterDescription": "護養院"
+      //   },
+      //   {
+      //     "Id": 10,
+      //     "CtrCode": 3750,
+      //     "SortOrder": 3750,
+      //     "HomeCenterAbbr": "PGR",
+      //     "HomeCenterName": "康恩園",
+      //     "HomeCenterDescription": "康恩園"
+      //   }
+      //  ],
 
        Polylines:[
         {
@@ -354,13 +356,19 @@ class Floor extends Component {
           "FloorNo": 4,
           "FloorDesc": "4/F"
         }
-       ]
+       ],
+       newline: [
+        { id: 1, lat: -165, lng: 90.5 },
+        { id: 2, lat: -170, lng: 150.5 },
+        { id: 3, lat: -160.5, lng: 350.5 },
+      ],
        
 
     };
   }
 
-  componentDidMount() {
+ async componentDidMount() {
+   
     const map = this.map.leafletElement;
 
     map.on("zoomend", () => {
@@ -384,6 +392,19 @@ class Floor extends Component {
     const bounds = new L.LatLngBounds(southWest, northEast);
     this.setState({ bounds: bounds });
     map.setMaxBounds(bounds);
+
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'React POST Request Example' })
+  };
+  const response = await fetch('http://www.klconnectit.com/sms/api/system/HomeCenterList', requestOptions);
+  const data = await response.json();
+  this.setState({buildings: data.data });
+
+  this.setState({selectedBuilding: this.state.buildings.find(x=>x.ctrCode === 450) })
+
   }
 
   componentDidUpdate() {
@@ -428,7 +449,7 @@ class Floor extends Component {
     if(value !==null && value !=='' && value !==undefined){
     this.setState({
       selectedBuilding: value,
-      myfloors:this.state.myfloors.filter(x=>x.CtrCode===value.CtrCode)
+      myfloors:this.state.myfloors.filter(x=>x.ctrCode===value.ctrCode)
     });
   }
   };
@@ -463,7 +484,7 @@ class Floor extends Component {
     //   return option.inputValue;
     // }
     // Regular option
-    return option.HomeCenterDescription || ""; // option ? : "";
+    return option.homeCenterDescription || ""; // option ? : "";
   };
 
   updateMarkerPosition(e) {
@@ -481,6 +502,22 @@ class Floor extends Component {
 
     // update Marker to state
     this.setState({ markers: updatedMarkers });
+  }
+
+  showpolylines(){
+    const mymarkers=[];
+
+    let updatedpolylines = this.state.Polylines.map(
+      (m) => {
+        mymarkers.push({lat:m.X,lng:m.Y})
+      },
+      
+    );
+    
+      this.setState({newline:updatedpolylines})
+      console.log(mymarkers);
+      console.log(updatedpolylines);
+      alert('hi');
   }
 
   render() {
@@ -525,12 +562,15 @@ class Floor extends Component {
                 </Popup>
               </Marker>
             ))} */}
+            {/* this.state.Polylines && this.state.Polylines.map((m) => (
+                this.setState({newline:[ this.state.newline,{id:1,lat:m.X,lng:m.Y}] })
+               
+            
+              )) */}
 
             <Polyline
               
-              positions={this.state.Polylines && this.state.Polylines.map((m) => (
-               {lat:m.X, lng: m.Y}
-              ))}
+              positions={this.state.newline}
             ></Polyline>
           </ImageOverlay>: null
   }
@@ -549,8 +589,8 @@ class Floor extends Component {
                 F2
               </button>
               <button
-                onClick={this.handleChangeFloor.bind(this)}
-                data-floor="delta_Gf"
+                onClick={this.showpolylines.bind(this)}
+                
               >
                 GF
               </button>
@@ -558,22 +598,24 @@ class Floor extends Component {
           </Control>
           <Control position="topright">
             <div style={{ backgroundColor: "transparent", padding: "5px" }}>
+              {console.log(this.state.buildings)}
+              {this.state.buildings &&
               <AutoComplete
                 value={this.state.selectedBuilding}
                 label="Centre"
                 name="building"
                 id="building"
-                options={this.state.buildings.filter(x=>x.CtrCode ==450)}
-                defaultValue={this.state.buildings.find(x=>x.CtrCode ==450)}
+                options={this.state.buildings.filter(x=>x.ctrCode === 450)}
+                defaultValue={this.state.buildings.find(x=>x.ctrCode === 450)}
                 onChange={this.buildingonchange}
                 getOptionLabel={this.buildingoptionlabel}
                 getOptionSelected={(option, value) =>
-                  value.HomeCenterDescription === option.HomeCenterDescription
+                  value.homeCenterDescription === option.homeCenterDescription
                 }
                 fullWidth={true}
                 freesolo={true}
-              />
-
+              />}
+              {this.state.floors &&
               <AutoComplete
                 value={this.state.selectedFloor}
                 label="Floor"
@@ -588,6 +630,7 @@ class Floor extends Component {
                 fullWidth={true}
                 freesolo={true}
               />
+  }
             </div>
           </Control>
         </Map>
@@ -602,3 +645,7 @@ class Floor extends Component {
 }
 
 export default Floor;
+
+
+//http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=0450&flr=0&cln=MC1133-19&st=2021-12-24 08:00:00.000&et=2021-12-24 23:00:00.000
+//http://www.klconnectit.com/sms/api/system/HomeCenterFloorList?ctr=0450
