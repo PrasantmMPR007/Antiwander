@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { Map, ImageOverlay, Marker, Popup } from "react-leaflet";
+import { Map, ImageOverlay, Marker, Popup, Polyline } from "react-leaflet";
 import { CRS } from "leaflet";
 import Control from "react-leaflet-control";
 import camera from "../image/icon/camera.png";
@@ -12,7 +12,7 @@ import f4 from "../image/floormap/F4.jpeg";
 import GF from "../image/floormap/GF.jpeg";
 import AutoComplete from "../controls/AutoComplete.js";
 import TimePicker from "../controls/TimePicker";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 function MyMap() {
   const [Floor, setFloor] = useState(null);
@@ -20,6 +20,7 @@ function MyMap() {
   const [center, setCenter] = useState({});
   const [Centerlist, setCenterlist] = useState(null);
   const [WanderingPath, setWanderingPath] = useState(null);
+  const [Wandererline, setWandererline] = useState(null);
   const [markers, setMarkers] = useState(null);
   const [sttime, setSttime] = useState(new Date());
   const [endtime, setEndtime] = useState(new Date());
@@ -27,6 +28,8 @@ function MyMap() {
   const [zoom, setZoom] = useState(1);
   const [client, SetClient] = useState(null);
   const [clientlist, SetClientlist] = useState(null);
+  const [search, setSearch] = useState(false);
+  const [crsfloor, serCrsfloor] = useState(true);
 
   useEffect(() => {
     const map = mapRef.current.leafletElement;
@@ -173,67 +176,60 @@ function MyMap() {
       if (
         center != null &&
         Floor != null &&
+        client != null &&
         sttime != null &&
         endtime != null
       ) {
         const response = await fetch(
           "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
-            center.ctrCode +
+            center.ctrCode.toString() +
             "&flr=" +
-            Floor.floorNo +
+            Floor.floorNo.toString() +
             "&cln=" +
-            "MC1133-19" +
-            "&st=2021-12-24 08:00:00.000&et=2021-12-24 23:00:00.000",
+            client.toString() +
+            "&st=" +
+            sttime +
+            "&et=" +
+            endtime,
           requestOptions
         );
         const data = await response.json();
-        setWanderingPath(data.data);
+        console.log(data);
+        data.success && setWanderingPath(data.data);
+        let co = [];
+        data.success &&
+          setWandererline(
+            data.data
+              .filter((x) => x.floorNo == Floor.floorNo)
+              .map((x) => {
+                //Xy Coordinates Conversion
+                var yx = L.latLng;
+
+                var xy = (x, y) => {
+                  if (L.Util.isArray(x)) {
+                    // When doing xy([x, y]);
+                    return yx(x[1], x[0]);
+                  }
+                  return yx(y, x); // When doing xy(x, y);
+                };
+                co.push(xy(x.x, x.y));
+                //co.push({ lat: x.y / 2, lng: x.x / 2 });
+
+                return co;
+              })
+          );
+        setSearch(false);
       }
     };
+    console.log(Wandererline);
     GetWanderingPath();
-  }, [center, Floor && Floor]);
+  }, [search]);
 
-
-
-
-  const GetWanderingPath = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    };
-    if (
-      center != null &&
-      Floor != null &&
-      client != null&&
-      sttime != null &&
-      endtime != null
-    ) {
-      
-
-      const response = await fetch(
-        "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
-          center.ctrCode.toString() +
-          "&flr=" +
-          Floor.floorNo.toString() +
-          "&cln=" +
-          client.toString() +
-          "&st="+sttime+
-          "&et="+endtime,
-        requestOptions
-      );
-      const data = await response.json();
-      console.log(data);
-      setWanderingPath(data.data);
-    }
+  const searchclicked = (event) => {
+    // GetWanderingPath();
+    setSearch(true);
+    console.log(Wandererline);
   };
-
-
-  const searchclicked =(event)=>{
-    GetWanderingPath();
-  }
-
-
 
   const Centeronchange = (event) => {
     const { name, value } = event.target;
@@ -299,7 +295,7 @@ function MyMap() {
         maxZoom={3}
         center={[0, 0]}
       >
-
+        {Wandererline && <Polyline positions={Wandererline}></Polyline>}
 
         <Control position="topright">
           <div
@@ -309,48 +305,52 @@ function MyMap() {
               maxWidth: "220px",
             }}
           >
-            <AutoComplete
-              value={center}
-              label="Center"
-              name="Center"
-              id="Center"
-              options={Centerlist && Centerlist}
-              onChange={Centeronchange}
-              getOptionLabel={Centeroptionlabel}
-              getOptionSelected={(option, value) =>
-                value.homeCenterDescription === option.homeCenterDescription
-              }
-              fullWidth={true}
-              freesolo={true}
-            />
-
-            <AutoComplete
-              value={Floor}
-              label="Floor"
-              name="Floor"
-              id="Floor"
-              options={Floorlist && Floorlist}
-              onChange={Flooronchange}
-              getOptionLabel={Flooroptionlabel}
-              getOptionSelected={(option, value) =>
-                value.floorName === option.floorName
-              }
-              fullWidth={true}
-              freesolo={true}
-            />
-
-            <AutoComplete
-              value={client}
-              label="Client"
-              name="CLient"
-              id="Client"
-              options={clientlist && clientlist}
-              onChange={clientonchange}
-              getOptionLabel={clientoptionlabel}
-              getOptionSelected={(option, value) => value === option}
-              fullWidth={true}
-              freesolo={true}
-            />
+            {Centerlist && (
+              <AutoComplete
+                value={center}
+                label="Center"
+                name="Center"
+                id="Center"
+                options={Centerlist && Centerlist}
+                onChange={Centeronchange}
+                getOptionLabel={Centeroptionlabel}
+                getOptionSelected={(option, value) =>
+                  value.homeCenterDescription === option.homeCenterDescription
+                }
+                fullWidth={true}
+                freesolo={true}
+              />
+            )}
+            {Floorlist && (
+              <AutoComplete
+                value={Floor}
+                label="Floor"
+                name="Floor"
+                id="Floor"
+                options={Floorlist && Floorlist}
+                onChange={Flooronchange}
+                getOptionLabel={Flooroptionlabel}
+                getOptionSelected={(option, value) =>
+                  value.floorName === option.floorName
+                }
+                fullWidth={true}
+                freesolo={true}
+              />
+            )}
+            {clientlist && (
+              <AutoComplete
+                value={client}
+                label="Client"
+                name="CLient"
+                id="Client"
+                options={clientlist && clientlist}
+                onChange={clientonchange}
+                getOptionLabel={clientoptionlabel}
+                getOptionSelected={(option, value) => value === option}
+                fullWidth={true}
+                freesolo={true}
+              />
+            )}
 
             <TimePicker
               value={sttime}
@@ -367,8 +367,10 @@ function MyMap() {
               id="endtime"
               onChange={endtimeonchange}
             />
-            
-            <Button variant="contained" color="primary" onClick={searchclicked}>Search</Button>
+
+            <Button variant="contained" color="primary" onClick={searchclicked}>
+              Search
+            </Button>
           </div>
         </Control>
       </Map>
