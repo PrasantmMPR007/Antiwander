@@ -209,6 +209,8 @@ function MyMap() {
       sttime != null &&
       endtime != null
     ) {
+      
+
       const response = await fetch(
         "http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=" +
           center.ctrCode.toString() +
@@ -216,8 +218,8 @@ function MyMap() {
           Floor.floorNo.toString() +
           "&cln=" +
           client.toString() +
-          "&st="+sttime.toString()+
-          "&et="+endtime.toString(),
+          "&st="+sttime+
+          "&et="+endtime,
         requestOptions
       );
       const data = await response.json();
@@ -297,6 +299,8 @@ function MyMap() {
         maxZoom={3}
         center={[0, 0]}
       >
+
+
         <Control position="topright">
           <div
             style={{

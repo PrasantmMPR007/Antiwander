@@ -47,7 +47,7 @@ export default function TimePicker(props) {
         ampm={false}
         label={label}
         value={value}
-        format={"yyyy-MM-dd HH:mm:ss:000"}
+        format={"yyyy-MM-dd HH:mm:ss"}
         onChange={(e, value) => onChange(convertToDefEventPara(name, value))}
         name={name}
         onError={console.log}
