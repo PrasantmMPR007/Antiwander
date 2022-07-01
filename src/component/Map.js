@@ -11,8 +11,11 @@ import f3 from "../image/floormap/F3.jpeg";
 import f4 from "../image/floormap/F4.jpeg";
 import GF from "../image/floormap/GF.jpeg";
 import AutoComplete from "../controls/AutoComplete.js";
-import TimePicker from "../controls/TimePicker";
+import MyTimePicker from "../controls/TimePicker";
+import DatePicker from "../controls/DatePicker";
 import Button from "@material-ui/core/Button";
+import { format } from "date-fns";
+//import { DatePicker } from "@material-ui/pickers";
 
 function MyMap() {
   const [Floor, setFloor] = useState(null);
@@ -22,6 +25,7 @@ function MyMap() {
   const [WanderingPath, setWanderingPath] = useState(null);
   const [Wandererline, setWandererline] = useState(null);
   const [markers, setMarkers] = useState(null);
+  const [stdate, setStdate] = useState(new Date());
   const [sttime, setSttime] = useState(new Date());
   const [endtime, setEndtime] = useState(new Date());
   const mapRef = useRef(null);
@@ -30,6 +34,8 @@ function MyMap() {
   const [clientlist, SetClientlist] = useState(null);
   const [search, setSearch] = useState(false);
   const [crsfloor, serCrsfloor] = useState(true);
+  const [crsfloorlist, setCrsFloorlist] = useState(null);
+  const [popcontrol, setPopControl] = useState(true);
 
   useEffect(() => {
     const map = mapRef.current.leafletElement;
@@ -173,6 +179,9 @@ function MyMap() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
       };
+      console.log(
+        center + "" + Floor + "" + client + "" + sttime + "" + endtime + ""
+      );
       if (
         center != null &&
         Floor != null &&
@@ -188,40 +197,47 @@ function MyMap() {
             "&cln=" +
             client.toString() +
             "&st=" +
-            sttime +
+            format(sttime, "yyyy-MM-dd HH:mm:ss") +
             "&et=" +
-            endtime,
+            format(endtime, "yyyy-MM-dd HH:mm:ss"),
           requestOptions
         );
         const data = await response.json();
         console.log(data);
         data.success && setWanderingPath(data.data);
         let co = [];
-        data.success &&
-          setWandererline(
-            data.data
-              .filter((x) => x.floorNo == Floor.floorNo)
-              .map((x) => {
-                //Xy Coordinates Conversion
-                var yx = L.latLng;
+        data.success && data.data.length > 0
+          ? setWandererline(
+              data.data
+                .filter((x) => x.floorNo == Floor.floorNo)
+                .map((x) => {
+                  //Xy Coordinates Conversion
+                  var yx = L.latLng;
 
-                var xy = (x, y) => {
-                  if (L.Util.isArray(x)) {
-                    // When doing xy([x, y]);
-                    return yx(x[1], x[0]);
-                  }
-                  return yx(y, x); // When doing xy(x, y);
-                };
-                co.push(xy(x.x, x.y));
-                //co.push({ lat: x.y / 2, lng: x.x / 2 });
+                  var xy = (x, y) => {
+                    if (L.Util.isArray(x)) {
+                      // When doing xy([x, y]);
+                      return yx(x[1], x[0]);
+                    }
+                    return yx(y, x); // When doing xy(x, y);
+                  };
+                  co.push(xy(x.x, x.y));
+                  //co.push({ lat: x.y / 2, lng: x.x / 2 });
 
-                return co;
-              })
-          );
+                  return co;
+                })
+            )
+          : alert("No records found");
+
         setSearch(false);
       }
+
+      // else {
+      //   setWandererline(null);
+      //   setSearch(false);
+      // }
     };
-    console.log(Wandererline);
+
     GetWanderingPath();
   }, [search]);
 
@@ -251,6 +267,9 @@ function MyMap() {
     }
   };
 
+  const crsfloorchange = (value) => {
+    setFloor(value);
+  };
   const clientoptionlabel = (option) => {
     return option || "";
   };
@@ -267,19 +286,28 @@ function MyMap() {
     return option.floorName || "";
   };
 
-  const sttimeonchange = (event) => {
+  const stdateonchange = (event) => {
     const { name, value } = event.target;
     if (value !== null && value !== "" && value !== undefined) {
-      setSttime(value);
+      setStdate(value);
       console.log(value);
+    }
+  };
+
+  const sttimeonchange = (event) => {
+    const { name, value } = event.target;
+    console.log(value);
+    if (value !== null && value !== "" && value !== undefined) {
+      setSttime(new Date(stdate + " " + value + ":00"));
+      console.log(new Date(stdate + " " + value + ":00"));
     }
   };
 
   const endtimeonchange = (event) => {
     const { name, value } = event.target;
     if (value !== null && value !== "" && value !== undefined) {
-      setEndtime(value);
-      console.log(value);
+      setEndtime(new Date(stdate + " " + value + ":00"));
+      console.log(new Date(stdate + " " + value + ":00"));
     }
   };
 
@@ -293,9 +321,17 @@ function MyMap() {
         Zoom={zoom}
         minZoom={0}
         maxZoom={3}
-        center={[0, 0]}
+        center={[0, 1600]}
       >
         {Wandererline && <Polyline positions={Wandererline}></Polyline>}
+
+        {crsfloorlist && (
+          <Control position="topright">
+            <div style={{ backgroundColor: "transparent", padding: "5px" }}>
+              <button onClick={Flooronchange()}>F1</button>
+            </div>
+          </Control>
+        )}
 
         <Control position="topright">
           <div
@@ -351,18 +387,25 @@ function MyMap() {
                 freesolo={true}
               />
             )}
-
-            <TimePicker
+            <DatePicker
+              value={stdate}
+              lable="Date"
+              name="date"
+              id="stdate"
+              disablePast={false}
+              onChange={stdateonchange}
+            />
+            <MyTimePicker
               value={sttime}
-              lable="Start Time"
+              label="Start Time"
               name="starttime"
               id="starttime"
               onChange={sttimeonchange}
             />
 
-            <TimePicker
+            <MyTimePicker
               value={endtime}
-              lable="End Time"
+              label="End Time"
               name="endtime"
               id="endtime"
               onChange={endtimeonchange}
