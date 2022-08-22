@@ -4,8 +4,9 @@ import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
+  KeyboardDatePicker,
   KeyboardDateTimePicker,
-  TimePicker,
+  DateTimePicker,
 } from "@material-ui/pickers";
 import { TextField, FormControl, makeStyles } from "@material-ui/core";
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MyTimePicker(props) {
+export default function DatePicker(props) {
   const classes = useStyles();
 
   const { name, label, value, onChange, error, disabled, disablePast, others } =
@@ -38,45 +39,15 @@ export default function MyTimePicker(props) {
       error={error ? true : false}
     >
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        {/* <TimePicker
-          variant="inline"
-          ampm={false}
+        <KeyboardDateTimePicker
           label={label}
           value={value}
-          format={"HH:mm"}
-          onChange={(e, value) => onChange(convertToDefEventPara(name, value))}
-          name={name}
-          onError={console.log}
-          disablePast={disablePast}
-          disabled={disabled}
-          KeyboardButtonProps={{
-            "aria-label": "change time",
-          }}
-          {...others}
-        /> */}
-
-        {/* <TimePicker
-          clearable
           ampm={false}
-          label={label}
-          value={value}
-          name={name}
-          format={"HH:mm"}
-          onError={console.log()}
-          onChange={(e, value) => onChange(convertToDefEventPara(name, value))}
-        /> */}
-
-        <KeyboardTimePicker
-          ampm={false}
-          id={name}
-          label={label}
-          value={value}
-          format={"HH:mm"}
+          format={"yyyy-MM-dd HH:mm"}
           onChange={(e, value) => onChange(convertToDefEventPara(name, value))}
           name={name}
-          KeyboardButtonProps={{
-            "aria-label": "change time",
-          }}
+          disableFuture
+          views={["year", "month", "date", "hours", "minutes"]}
         />
       </MuiPickersUtilsProvider>
     </FormControl>

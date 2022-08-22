@@ -9,7 +9,7 @@ import f1 from "../image/floormap/F1.jpeg";
 import f2 from "../image/floormap/F2.jpeg";
 import f3 from "../image/floormap/F3.jpeg";
 import f4 from "../image/floormap/F4.jpeg";
-import GF from "../image/floormap/GF.jpeg";
+import GF from "../image/floormap/GF.jpg";
 import { Polyline } from "react-leaflet";
 import TextField from "@material-ui/core/TextField";
 import AutoComplete from "../controls/AutoComplete.js";
@@ -34,11 +34,11 @@ class Floor extends Component {
       currentZoomLevel: 0,
       bounds: iniBounds,
       targetFloor: "delta_b1",
-      selectedFloor :{
-        "CtrCode": 450,
-        "FloorNo": 0,
-        "FloorName": "G/F",
-        "Image": GF
+      selectedFloor: {
+        CtrCode: 450,
+        FloorNo: 0,
+        FloorName: "G/F",
+        Image: GF,
       },
       targetBuilding: "Building1",
       selectedBuilding: null,
@@ -94,7 +94,6 @@ class Floor extends Component {
               lat: -596,
               lng: 1252,
             },
-
           ],
           polylines: [
             { id: 1, lat: -165, lng: 90.5 },
@@ -156,45 +155,45 @@ class Floor extends Component {
           ],
         },
       },
-      floors:[
-          {
-            "CtrCode": 450,
-            "FloorNo": 0,
-            "FloorName": "G/F",
-            "Image": GF
-          },
-          {
-            "CtrCode": 450,
-            "FloorNo": 1,
-            "FloorName": "1/F",
-            "Image": f1
-          },
-          {
-            "CtrCode": 450,
-            "FloorNo": 2,
-            "FloorName": "2/F",
-            "Image": f2
-          },
-          {
-            "CtrCode": 450,
-            "FloorNo": 3,
-            "FloorName": "3/F",
-            "Image": f3
-          },
-          {
-            "CtrCode": 450,
-            "FloorNo": 4,
-            "FloorName": "4/F",
-            "Image": f4
-          }
-         ],
+      floors: [
+        {
+          CtrCode: 450,
+          FloorNo: 0,
+          FloorName: "G/F",
+          Image: GF,
+        },
+        {
+          CtrCode: 450,
+          FloorNo: 1,
+          FloorName: "1/F",
+          Image: f1,
+        },
+        {
+          CtrCode: 450,
+          FloorNo: 2,
+          FloorName: "2/F",
+          Image: f2,
+        },
+        {
+          CtrCode: 450,
+          FloorNo: 3,
+          FloorName: "3/F",
+          Image: f3,
+        },
+        {
+          CtrCode: 450,
+          FloorNo: 4,
+          FloorName: "4/F",
+          Image: f4,
+        },
+      ],
 
       // buildings: [
       //   { id: 1, label: "Building1" },
       //   { id: 2, label: "Building2" },
       // ],
 
-      buildings:null,
+      buildings: null,
       //[
       //   {
       //     "Id": 1,
@@ -278,97 +277,94 @@ class Floor extends Component {
       //   }
       //  ],
 
-       Polylines:[
+      Polylines: [
         {
-          "CtrCode": 450,
-          "LocationId": 50137,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 12:29:12",
-          "X": 1103,
-          "Y": 474,
-          "LocDesc": "四樓升降機",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
+          CtrCode: 450,
+          LocationId: 50137,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 12:29:12",
+          X: 1103,
+          Y: 474,
+          LocDesc: "四樓升降機",
+          FloorNo: 4,
+          FloorDesc: "4/F",
         },
         {
-          "CtrCode": 450,
-          "LocationId": 50123,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 12:29:30",
-          "X": 1027,
-          "Y": 475,
-          "LocDesc": "四樓門口",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
+          CtrCode: 450,
+          LocationId: 50123,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 12:29:30",
+          X: 1027,
+          Y: 475,
+          LocDesc: "四樓門口",
+          FloorNo: 4,
+          FloorDesc: "4/F",
         },
         {
-          "CtrCode": 450,
-          "LocationId": 50136,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 12:33:45",
-          "X": 1103,
-          "Y": 474,
-          "LocDesc": "四樓升降機",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
+          CtrCode: 450,
+          LocationId: 50136,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 12:33:45",
+          X: 1103,
+          Y: 474,
+          LocDesc: "四樓升降機",
+          FloorNo: 4,
+          FloorDesc: "4/F",
         },
         {
-          "CtrCode": 450,
-          "LocationId": 50123,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 12:33:51",
-          "X": 1027,
-          "Y": 475,
-          "LocDesc": "四樓門口",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
+          CtrCode: 450,
+          LocationId: 50123,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 12:33:51",
+          X: 1027,
+          Y: 475,
+          LocDesc: "四樓門口",
+          FloorNo: 4,
+          FloorDesc: "4/F",
         },
         {
-          "CtrCode": 450,
-          "LocationId": 50137,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 12:33:53",
-          "X": 1103,
-          "Y": 474,
-          "LocDesc": "四樓升降機",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
+          CtrCode: 450,
+          LocationId: 50137,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 12:33:53",
+          X: 1103,
+          Y: 474,
+          LocDesc: "四樓升降機",
+          FloorNo: 4,
+          FloorDesc: "4/F",
         },
         {
-          "CtrCode": 450,
-          "LocationId": 50124,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 12:33:56",
-          "X": 1027,
-          "Y": 475,
-          "LocDesc": "四樓門口",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
+          CtrCode: 450,
+          LocationId: 50124,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 12:33:56",
+          X: 1027,
+          Y: 475,
+          LocDesc: "四樓門口",
+          FloorNo: 4,
+          FloorDesc: "4/F",
         },
         {
-          "CtrCode": 450,
-          "LocationId": 50107,
-          "ClientId": "RC-45-0300",
-          "StartTime": "4/1/2022 15:26:37",
-          "X": 553,
-          "Y": 455,
-          "LocDesc": "四樓B翼後樓梯",
-          "FloorNo": 4,
-          "FloorDesc": "4/F"
-        }
-       ],
-       newline: [
+          CtrCode: 450,
+          LocationId: 50107,
+          ClientId: "RC-45-0300",
+          StartTime: "4/1/2022 15:26:37",
+          X: 553,
+          Y: 455,
+          LocDesc: "四樓B翼後樓梯",
+          FloorNo: 4,
+          FloorDesc: "4/F",
+        },
+      ],
+      newline: [
         { id: 1, lat: -165, lng: 90.5 },
         { id: 2, lat: -170, lng: 150.5 },
         { id: 3, lat: -160.5, lng: 350.5 },
       ],
-       
-
     };
   }
 
- async componentDidMount() {
-   
+  async componentDidMount() {
     const map = this.map.leafletElement;
 
     map.on("zoomend", () => {
@@ -393,18 +389,21 @@ class Floor extends Component {
     this.setState({ bounds: bounds });
     map.setMaxBounds(bounds);
 
-
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: 'React POST Request Example' })
-  };
-  const response = await fetch('http://www.klconnectit.com/sms/api/system/HomeCenterList', requestOptions);
-  const data = await response.json();
-  this.setState({buildings: data.data });
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: "React POST Request Example" }),
+    };
+    const response = await fetch(
+      "https://www.klconnectit.com/sms/api/system/HomeCenterList",
+      requestOptions
+    );
+    const data = await response.json();
+    this.setState({ buildings: data.data });
 
-  this.setState({selectedBuilding: this.state.buildings.find(x=>x.ctrCode === 450) })
-
+    this.setState({
+      selectedBuilding: this.state.buildings.find((x) => x.ctrCode === 450),
+    });
   }
 
   componentDidUpdate() {
@@ -446,33 +445,38 @@ class Floor extends Component {
   buildingonchange = (event, newvalue) => {
     const { name, value } = event.target;
     console.log(value);
-    if(value !==null && value !=='' && value !==undefined){
-    this.setState({
-      selectedBuilding: value,
-      myfloors:this.state.myfloors.filter(x=>x.ctrCode===value.ctrCode)
-    });
-  }
+    if (value !== null && value !== "" && value !== undefined) {
+      this.setState({
+        selectedBuilding: value,
+        myfloors: this.state.myfloors.filter(
+          (x) => x.ctrCode === value.ctrCode
+        ),
+      });
+    }
   };
 
   flooronchange = (event) => {
     const { name, value } = event.target;
     console.log(value);
     console.log(this.state.myfloors);
-    value !=null?
-    this.setState({
-        selectedFloor: value,  
-  }):"";
+    value != null
+      ? this.setState({
+          selectedFloor: value,
+        })
+      : "";
   };
 
   flooroptionlabel = (option) => {
     return option.FloorName || "";
   };
 
-  getfloor=()=>{
-      let buildbasefloor=this.state.myfloors.filter(x=>x.buildingid=this.state.selectedBuilding.id);
-      console.log(buildbasefloor);
-     return  buildbasefloor;
-  }
+  getfloor = () => {
+    let buildbasefloor = this.state.myfloors.filter(
+      (x) => (x.buildingid = this.state.selectedBuilding.id)
+    );
+    console.log(buildbasefloor);
+    return buildbasefloor;
+  };
 
   buildingoptionlabel = (option) => {
     // Value selected with enter, right from the input
@@ -504,20 +508,17 @@ class Floor extends Component {
     this.setState({ markers: updatedMarkers });
   }
 
-  showpolylines(){
-    const mymarkers=[];
+  showpolylines() {
+    const mymarkers = [];
 
-    let updatedpolylines = this.state.Polylines.map(
-      (m) => {
-        mymarkers.push({lat:m.X,lng:m.Y})
-      },
-      
-    );
-    
-      this.setState({newline:updatedpolylines})
-      console.log(mymarkers);
-      console.log(updatedpolylines);
-      alert('hi');
+    let updatedpolylines = this.state.Polylines.map((m) => {
+      mymarkers.push({ lat: m.X, lng: m.Y });
+    });
+
+    this.setState({ newline: updatedpolylines });
+    console.log(mymarkers);
+    console.log(updatedpolylines);
+    alert("hi");
   }
 
   render() {
@@ -539,13 +540,18 @@ class Floor extends Component {
           crs={L.CRS.Simple}
           attributionControl={false}
         >
-          {(this.state.selectedFloor !==null && this.state.selectedFloor !=='' 
-          &&this.state.selectedFloor !== undefined) ?
-                  <ImageOverlay
-            url={this.state.floors.find(x=>x.FloorNo == this.state.selectedFloor.FloorNo).Image }
-            bounds={this.state.bounds}
-          >
-            {/* {this.state.floors[this.state.targetFloor].markers.map((m) => (
+          {this.state.selectedFloor !== null &&
+          this.state.selectedFloor !== "" &&
+          this.state.selectedFloor !== undefined ? (
+            <ImageOverlay
+              url={
+                this.state.floors.find(
+                  (x) => x.FloorNo == this.state.selectedFloor.FloorNo
+                ).Image
+              }
+              bounds={this.state.bounds}
+            >
+              {/* {this.state.floors[this.state.targetFloor].markers.map((m) => (
               <Marker
                 key={m.id}
                 id={m.id}
@@ -562,18 +568,15 @@ class Floor extends Component {
                 </Popup>
               </Marker>
             ))} */}
-            {/* this.state.Polylines && this.state.Polylines.map((m) => (
+              {/* this.state.Polylines && this.state.Polylines.map((m) => (
                 this.setState({newline:[ this.state.newline,{id:1,lat:m.X,lng:m.Y}] })
                
             
               )) */}
 
-            <Polyline
-              
-              positions={this.state.newline}
-            ></Polyline>
-          </ImageOverlay>: null
-  }
+              <Polyline positions={this.state.newline}></Polyline>
+            </ImageOverlay>
+          ) : null}
           <Control position="topright">
             <div style={{ backgroundColor: "transparent", padding: "5px" }}>
               <button
@@ -588,49 +591,49 @@ class Floor extends Component {
               >
                 F2
               </button>
-              <button
-                onClick={this.showpolylines.bind(this)}
-                
-              >
-                GF
-              </button>
+              <button onClick={this.showpolylines.bind(this)}>GF</button>
             </div>
           </Control>
           <Control position="topright">
             <div style={{ backgroundColor: "transparent", padding: "5px" }}>
               {console.log(this.state.buildings)}
-              {this.state.buildings &&
-              <AutoComplete
-                value={this.state.selectedBuilding}
-                label="Centre"
-                name="building"
-                id="building"
-                options={this.state.buildings.filter(x=>x.ctrCode === 450)}
-                defaultValue={this.state.buildings.find(x=>x.ctrCode === 450)}
-                onChange={this.buildingonchange}
-                getOptionLabel={this.buildingoptionlabel}
-                getOptionSelected={(option, value) =>
-                  value.homeCenterDescription === option.homeCenterDescription
-                }
-                fullWidth={true}
-                freesolo={true}
-              />}
-              {this.state.floors &&
-              <AutoComplete
-                value={this.state.selectedFloor}
-                label="Floor"
-                name="Floor"
-                id="Floor"
-                options={this.state.floors}
-                onChange={this.flooronchange}
-                getOptionLabel={this.flooroptionlabel}
-                getOptionSelected={(option, value) =>
-                  value.FloorName === option.FloorName
-                }
-                fullWidth={true}
-                freesolo={true}
-              />
-  }
+              {this.state.buildings && (
+                <AutoComplete
+                  value={this.state.selectedBuilding}
+                  label="Centre"
+                  name="building"
+                  id="building"
+                  options={this.state.buildings.filter(
+                    (x) => x.ctrCode === 450
+                  )}
+                  defaultValue={this.state.buildings.find(
+                    (x) => x.ctrCode === 450
+                  )}
+                  onChange={this.buildingonchange}
+                  getOptionLabel={this.buildingoptionlabel}
+                  getOptionSelected={(option, value) =>
+                    value.homeCenterDescription === option.homeCenterDescription
+                  }
+                  fullWidth={true}
+                  freesolo={true}
+                />
+              )}
+              {this.state.floors && (
+                <AutoComplete
+                  value={this.state.selectedFloor}
+                  label="Floor"
+                  name="Floor"
+                  id="Floor"
+                  options={this.state.floors}
+                  onChange={this.flooronchange}
+                  getOptionLabel={this.flooroptionlabel}
+                  getOptionSelected={(option, value) =>
+                    value.FloorName === option.FloorName
+                  }
+                  fullWidth={true}
+                  freesolo={true}
+                />
+              )}
             </div>
           </Control>
         </Map>
@@ -645,7 +648,6 @@ class Floor extends Component {
 }
 
 export default Floor;
-
 
 //http://www.klconnectit.com/sms/api/system/WanderingPath?ctr=0450&flr=0&cln=MC1133-19&st=2021-12-24 08:00:00.000&et=2021-12-24 23:00:00.000
 //http://www.klconnectit.com/sms/api/system/HomeCenterFloorList?ctr=0450

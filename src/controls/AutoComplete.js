@@ -39,7 +39,7 @@ export default function AutoComplete(props) {
     freesolo,
     disabled,
     onmyTextChange,
-    defaultValue
+    defaultValue,
   } = props;
 
   return (
@@ -52,29 +52,28 @@ export default function AutoComplete(props) {
       <Autocomplete
         value={value}
         onChange={(e, value) => onChange(convertToDefEventPara(name, value))}
-        
-        filterOptions={filterOptions}
-        selectOnFocus
+        // filterOptions={filterOptions}
+        //selectOnFocus
         handleHomeEndKeys
         id={name}
         name={name}
         options={options}
         getOptionLabel={getOptionLabel}
-        freeSolo={freesolo}
+        //freeSolo={freesolo}
+        autoComplete
         defaultValue={defaultValue}
         renderInput={(params) => (
           <TextField
             {...params}
             label={label}
             variant="outlined"
-            
             {...(error && {
               error: true,
               helperText: error,
             })}
           />
         )}
-        disabled={disabled}
+        // disabled={disabled}
         {...others}
       />
       {/* {error && <FormHelperText>{error}</FormHelperText>} */}
