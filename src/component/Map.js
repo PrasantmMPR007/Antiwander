@@ -18,6 +18,7 @@ import { format } from "date-fns";
 //import { DatePicker } from "@material-ui/pickers";
 
 function MyMap() {
+  const [FloorNo, setFloorNo] = useState(null);
   const [Floor, setFloor] = useState(null);
   const [Floorlist, setFloorlist] = useState(null);
   const [center, setCenter] = useState({});
@@ -44,12 +45,15 @@ function MyMap() {
       iconAnchor: [24, 40],
     });
   //<img src=${camera}>
+
+  const viewRatio = 0.5;
+  const mybounds = [
+    [0, 0],
+    [1240 * viewRatio, 1754 * viewRatio],
+  ];
   useEffect(() => {
     const map = mapRef.current.leafletElement;
-    const mybounds = [
-      [-5, -10],
-      [780, 900],
-    ];
+
     const image = L.imageOverlay(GF, mybounds).addTo(map);
     map.fitBounds(image.getBounds());
 
@@ -144,10 +148,6 @@ function MyMap() {
   useEffect(() => {
     if (Floor !== null && Floor !== undefined) {
       const map = mapRef.current.leafletElement;
-      const mybounds = [
-        [-5, -10],
-        [780, 900],
-      ];
       const image = L.imageOverlay(GetFloorImage(Floor), mybounds).addTo(map);
       map.fitBounds(image.getBounds());
       const co = [];
@@ -172,33 +172,6 @@ function MyMap() {
       );
     }
   }, [Floor]);
-
-  // useEffect(() => {
-  //   const map = mapRef.current.leafletElement;
-  //   const mybounds = [
-  //     [-5, -10],
-  //     [780, 900],
-  //   ];
-  //   console.log(Floor);
-  //   const GetFloorImage = () => {
-  //     return Floor !== null
-  //       ? Floor.floorNo === 0
-  //         ? GF
-  //         : Floor.floorNo === 1
-  //         ? f1
-  //         : Floor.floorNo === 2
-  //         ? f2
-  //         : Floor.floorNo === 3
-  //         ? f3
-  //         : Floor.floorNo === 4
-  //         ? f4
-  //         : ""
-  //       : "";
-  //   };
-  //   console.log(GetFloorImage());
-  //   const image = L.imageOverlay(GetFloorImage(), mybounds).addTo(map);
-  //   map.fitBounds(image.getBounds());
-  // }, [Floor && Floor]);
 
   useEffect(() => {
     const GetWanderingPath = async () => {
@@ -260,10 +233,6 @@ function MyMap() {
 
           // after search Default Map load
           const map = mapRef.current.leafletElement;
-          const mybounds = [
-            [-5, -10],
-            [780, 900],
-          ];
           const image = L.imageOverlay(
             GetFloorImage(DefaultSelectedFloor.find((x) => x.floorNo)),
             mybounds
@@ -322,34 +291,12 @@ function MyMap() {
                   return co;
                 })
             );
-          // const mymarkerpionts = data.data
-          //   .filter(
-          //     (x) =>
-          //       x.floorNo ===
-          //       DefaultSelectedFloor.find((x) => x.floorNo).floorNo
-          //   )
-          //   .map((x) => {
-          //     //Xy Coordinates Conversion
-          //     var yx = L.latLng;
-
-          //     var xy = (x, y) => {
-          //       if (L.Util.isArray(x)) {
-          //         // When doing xy([x, y]);
-          //         return yx(x[1], x[0]);
-          //       }
-          //       return yx(y, x); // When doing xy(x, y);
-          //     };
-          //     co.push(xy(x.x, x.y));
-          //     //co.push({ lat: x.y / 2, lng: x.x / 2 });
-
-          //     //return co;
-          //   });
-          // console.log(mymarkerpionts);
-
-          // const mymarkers = L.marker(mymarkerpionts[0]).addTo(map);
+        } else {
+          alert("No records found");
+          setWandererline(null);
+          setCrsFloorlist(null);
         }
-        //else alert("No records found");
-        setSearch(false);
+        //setSearch(false);
       }
 
       // else {
@@ -423,58 +370,48 @@ function MyMap() {
     }
   };
 
-  // const sttimeonchange = (event) => {
-  //   const { name, value } = event.target;
-  //   console.log(value);
-  //   if (value !== null && value !== "" && value !== undefined) {
-  //     setSttime(new Date(stdate + " " + value + ":00"));
-  //     console.log(new Date(stdate + " " + value + ":00"));
-  //   }
-  // };
-
-  // const endtimeonchange = (event) => {
-  //   const { name, value } = event.target;
-  //   if (value !== null && value !== "" && value !== undefined) {
-  //     setEndtime(new Date(stdate + " " + value + ":00"));
-  //     console.log(new Date(stdate + " " + value + ":00"));
-  //   }
-  // };
-  let a = 0;
+  let a = 1;
 
   return (
     <div>
       <Map
         ref={mapRef}
         crs={CRS.Simple}
-        boundsOptions={{ padding: [20, 20] }}
-        style={{ height: "97vh" }}
+        boundsOptions={{ padding: [0, 0] }}
+        //style={{ height: "97vh" }}
         Zoom={zoom}
-        minZoom={0}
+        minZoom={-1}
         maxZoom={3}
-        center={[0, 1600]}
+        // center={[0, 1600]}
       >
         {Wandererline &&
           Wandererline[0].map((e) => (
             <Marker
               id={a}
               key={a}
-              position={[e.lat, e.lng]}
+              position={[(1240 - e.lat) * viewRatio, e.lng * viewRatio]}
               icon={customPin(a)}
             >
               <Popup>
                 <span>
                   {" "}
-                  Lat:{e.lat}, Lng:{e.lng}
+                  X:{e.lng}, Y:{e.lat}
                 </span>
               </Popup>
               {a++}
             </Marker>
           ))}
-
-        {Wandererline && <Polyline positions={Wandererline[0]}></Polyline>}
+        {/* {Wandererline && <Polyline positions={Wandererline[0]}></Polyline>} */}
         {crsfloorlist && (
           <Control position="topright">
-            <div style={{ backgroundColor: "transparent", padding: "5px" }}>
+            <div
+              style={{
+                backgroundColor: "transparent",
+                padding: "5px 25px",
+                width: "220px",
+                maxWidth: "220px",
+              }}
+            >
               <AutoComplete
                 value={Floor}
                 label="Floor"
@@ -489,6 +426,27 @@ function MyMap() {
                 fullWidth={true}
                 //freesolo={true}
               />
+              <table
+                style={{
+                  backgroundColor: "transparent",
+                  padding: "5px 25px",
+                  width: "220px",
+                  maxWidth: "220px",
+                }}
+              >
+                <tr>
+                  <th>Wandering Path</th>
+                </tr>
+                {/* please add filter to selected floorNo */}
+                {Floor &&
+                  WanderingPath.filter((u) => u.floorNo === Floor.floorNo).map(
+                    (p) => (
+                      <tr>
+                        <td>{p.startTime.toString() + " @ " + p.locDesc}</td>
+                      </tr>
+                    )
+                  )}
+              </table>
             </div>
           </Control>
         )}
@@ -496,7 +454,7 @@ function MyMap() {
           <div
             style={{
               backgroundColor: "transparent",
-              padding: "5px",
+              padding: "5px 25px",
               maxWidth: "220px",
             }}
           >
@@ -516,22 +474,7 @@ function MyMap() {
                 //freesolo={true}
               />
             )}
-            {/* {Floorlist && (
-              <AutoComplete
-                value={Floor}
-                label="Floor"
-                name="Floor"
-                id="Floor"
-                options={Floorlist && Floorlist}
-                onChange={Flooronchange}
-                getOptionLabel={Flooroptionlabel}
-                getOptionSelected={(option, value) =>
-                  value.floorName === option.floorName
-                }
-                fullWidth={true}
-                //freesolo={true}
-              />
-            )} */}
+
             {clientlist && (
               <AutoComplete
                 value={client}
@@ -560,21 +503,6 @@ function MyMap() {
               id="todate"
               onChange={todateonchange}
             />
-            {/* <MyTimePicker
-              value={sttime}
-              label="Start Time"
-              name="starttime"
-              id="starttime"
-              onChange={sttimeonchange}
-            />
-
-            <MyTimePicker
-              value={endtime}
-              label="End Time"
-              name="endtime"
-              id="endtime"
-              onChange={endtimeonchange}
-            /> */}
 
             <Button variant="contained" color="primary" onClick={searchclicked}>
               Search
