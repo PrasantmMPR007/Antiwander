@@ -18,7 +18,7 @@ import { format } from "date-fns";
 //import { DatePicker } from "@material-ui/pickers";
 
 function MyMap() {
-  const [FloorNo, setFloorNo] = useState(null);
+  //const [FloorNo, setFloorNo] = useState(null);
   const [Floor, setFloor] = useState(null);
   const [Floorlist, setFloorlist] = useState(null);
   const [center, setCenter] = useState({});
@@ -152,24 +152,7 @@ function MyMap() {
       map.fitBounds(image.getBounds());
       const co = [];
       console.log(WanderingPath);
-      setWandererline(
-        WanderingPath.filter((x) => x.floorNo === Floor.floorNo).map((x) => {
-          //Xy Coordinates Conversion
-          var yx = L.latLng;
-
-          var xy = (x, y) => {
-            if (L.Util.isArray(x)) {
-              // When doing xy([x, y]);
-              return yx(x[1], x[0]);
-            }
-            return yx(y, x); // When doing xy(x, y);
-          };
-          co.push(xy(x.x, x.y));
-          //co.push({ lat: x.y / 2, lng: x.x / 2 });
-
-          return co;
-        })
-      );
+      setWandererline(WanderingPath.filter((x) => x.floorNo === Floor.floorNo));
     }
   }, [Floor]);
 
@@ -241,55 +224,14 @@ function MyMap() {
           map.fitBounds(image.getBounds());
           console.log(DefaultSelectedFloor.find((x) => x.floorNo));
 
-          const Newwanderline = (Data, SelectedFloor) => {
-            let co1 = [];
-            Data.filter(
-              (x) => x.floorNo === SelectedFloor.find((x) => x.floorNo).floorNo
-            ).map((x) => {
-              let Colocal = [];
-              //Xy Coordinates Conversion
-              var yx = L.latLng;
-
-              var xy = (x, y) => {
-                if (L.Util.isArray(x)) {
-                  // When doing xy([x, y]);
-                  return yx(x[1], x[0]);
-                }
-                return yx(y, x); // When doing xy(x, y);
-              };
-              //Colocal.push(xy(x.x, x.y));
-              co1.push(Colocal);
-              return co1;
-            });
-            return co1;
-          };
-          console.log(Newwanderline(data.data, DefaultSelectedFloor));
-
           DefaultSelectedFloor !== null &&
             DefaultSelectedFloor !== undefined &&
             setWandererline(
-              data.data
-                .filter(
-                  (x) =>
-                    x.floorNo ===
-                    DefaultSelectedFloor.find((x) => x.floorNo).floorNo
-                )
-                .map((x) => {
-                  //Xy Coordinates Conversion
-                  var yx = L.latLng;
-
-                  var xy = (x, y) => {
-                    if (L.Util.isArray(x)) {
-                      // When doing xy([x, y]);
-                      return yx(x[1], x[0]);
-                    }
-                    return yx(y, x); // When doing xy(x, y);
-                  };
-                  co.push(xy(x.x, x.y));
-                  //co.push({ lat: x.y / 2, lng: x.x / 2 });
-
-                  return co;
-                })
+              data.data.filter(
+                (x) =>
+                  x.floorNo ===
+                  DefaultSelectedFloor.find((x) => x.floorNo).floorNo
+              )
             );
         } else {
           alert("No records found");
@@ -298,11 +240,6 @@ function MyMap() {
         }
         //setSearch(false);
       }
-
-      // else {
-      //   setWandererline(null);
-      //   setSearch(false);
-      // }
     };
 
     GetWanderingPath();
@@ -371,6 +308,7 @@ function MyMap() {
   };
 
   let a = 1;
+  let b = 1;
 
   return (
     <div>
@@ -385,17 +323,18 @@ function MyMap() {
         // center={[0, 1600]}
       >
         {Wandererline &&
-          Wandererline[0].map((e) => (
+          Wandererline.map((e) => (
             <Marker
               id={a}
               key={a}
-              position={[(1240 - e.lat) * viewRatio, e.lng * viewRatio]}
+              position={[(1240 - e.y) * viewRatio, e.x * viewRatio]}
               icon={customPin(a)}
             >
               <Popup>
                 <span>
-                  {" "}
-                  X:{e.lng}, Y:{e.lat}
+                  {format(new Date(e.startTime), "yyyy-MM-dd HH:mm:ss")}
+                  <br />
+                  {e.locDesc.toString()}
                 </span>
               </Popup>
               {a++}
@@ -424,8 +363,8 @@ function MyMap() {
                   value.floorName === option.floorName
                 }
                 fullWidth={true}
-                //freesolo={true}
               />
+
               <table
                 style={{
                   backgroundColor: "transparent",
@@ -437,15 +376,41 @@ function MyMap() {
                 <tr>
                   <th>Wandering Path</th>
                 </tr>
-                {/* please add filter to selected floorNo */}
-                {Floor &&
-                  WanderingPath.filter((u) => u.floorNo === Floor.floorNo).map(
-                    (p) => (
-                      <tr>
-                        <td>{p.startTime.toString() + " @ " + p.locDesc}</td>
-                      </tr>
-                    )
-                  )}
+                <tbody>
+                  <div
+                    id="style-2"
+                    style={{
+                      height: "220px",
+                      overflowY: "scroll",
+                    }}
+                  >
+                    <div style={{ minHeight: "220px" }}>
+                      {Floor &&
+                        WanderingPath.filter(
+                          (u) => u.floorNo === Floor.floorNo
+                        ).map((p) => (
+                          <tr>
+                            <td>
+                              {b +
+                                ") " +
+                                format(
+                                  new Date(p.startTime),
+                                  "yyyy-MM-dd HH:mm:ss"
+                                ) +
+                                " @ " +
+                                p.locDesc +
+                                " [" +
+                                p.x.toString() +
+                                "," +
+                                p.y.toString() +
+                                "]"}
+                            </td>
+                            <span style={{ display: "none" }}>{b++}</span>
+                          </tr>
+                        ))}
+                    </div>
+                  </div>
+                </tbody>
               </table>
             </div>
           </Control>
@@ -471,7 +436,6 @@ function MyMap() {
                   value.homeCenterDescription === option.homeCenterDescription
                 }
                 fullWidth={true}
-                //freesolo={true}
               />
             )}
 
@@ -486,7 +450,6 @@ function MyMap() {
                 getOptionLabel={clientoptionlabel}
                 getOptionSelected={(option, value) => value === option}
                 fullWidth={true}
-                //freesolo={true}
               />
             )}
             <DatePicker
