@@ -307,6 +307,19 @@ function MyMap() {
     }
   };
 
+  const Wanderpolyline = (Polylines) => {
+    let existinglatlng = Polylines;
+    let listoflatlngs = [];
+    existinglatlng.map((e) => {
+      let obj = {};
+      obj["lat"] = (1240 - e.y) * viewRatio;
+      obj["lng"] = e.x * viewRatio;
+      listoflatlngs.push(obj);
+    });
+
+    return <Polyline positions={listoflatlngs}></Polyline>;
+  };
+
   let a = 1;
   let b = 1;
 
@@ -340,7 +353,10 @@ function MyMap() {
               {a++}
             </Marker>
           ))}
-        {/* {Wandererline && <Polyline positions={Wandererline[0]}></Polyline>} */}
+        {Wandererline && Wanderpolyline(Wandererline)}
+        {/* <Wanderpolyline Polylines={Wandererline}></Wanderpolyline> */}
+
+        {/* {WanderingPath && <Polyline positions={WanderingPath}></Polyline>} */}
         {crsfloorlist && (
           <Control position="topright">
             <div
